@@ -1,0 +1,155 @@
+.cartitems {
+  width: min(var(--content-width), calc(100% - (var(--page-gutter) * 2)));
+  margin: 70px auto;
+}
+.cartitems hr {
+  height: 3px;
+  background: #e2e2e2;
+  border: 0;
+}
+.cartitems-empty {
+  margin: 60px 0;
+  color: #555;
+  font-size: 18px;
+  text-align: center;
+}
+.cartitems-format-main {
+  display: grid;
+  grid-template-columns: 0.5fr 2fr 1fr 1fr 1fr 1fr;
+  align-items: center;
+  gap: clamp(12px, 3vw, 48px);
+  padding: 20px 0px;
+  color: #454545;
+  font-size: 18px;
+  font-weight: 600;
+}
+.cartitems-format {
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+.title { min-width: 0; }
+.productLink { display: block; line-height: 0; }
+.carticon-product-icon {
+  height: 62px;
+}
+.cartitems-remove-icon {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  padding: 8px;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+.cartitems-remove-icon img { width: 100%; }
+.cartitems-quantity {
+  display: inline-grid;
+  place-items: center;
+  width: 44px;
+  height: 38px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+}
+.cartitems-down {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(280px, 0.9fr);
+  gap: clamp(40px, 10vw, 150px);
+  margin: 80px 0;
+}
+.cartitems-total {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+.cartitems-total-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 15px 0px;
+}
+.cartitems-total button {
+  width: fit-content;
+  min-height: 54px;
+  padding: 0 22px;
+  outline: none;
+  border: none;
+  background: #ff5a5a;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 550;
+  cursor: pointer;
+}
+.cartitems-total button:disabled { cursor: not-allowed; opacity: 0.65; }
+.cartMessage { margin: -20px 0 0; color: #5a385c; font-weight: 500; }
+.cartitems-couponcode {
+  font-size: 16px;
+  font-weight: 500;
+}
+.cartitems-couponcode p {
+  color: #555;
+}
+.cartitems-couponbox {
+  width: 100%;
+  max-width: 450px;
+  margin-top: 15px;
+  padding-left: 20px;
+  height: 58px;
+  background: #eaeaea;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.cartitems-couponbox input {
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 16px;
+  width: 250px;
+  height: 50px;
+}
+.cartitems-couponbox button {
+  width: 170px;
+  height: 58px;
+  font-size: 16px;
+  background: black;
+  color: white;
+  cursor: pointer;
+}
+.appliedCoupon { display: flex; justify-content: space-between; align-items: center; gap: 12px; max-width: 450px; margin-top: 12px; padding: 11px 13px; background: #e7f7eb; color: #236b39; font-size: 14px; }
+.appliedCoupon button { border: 0; background: transparent; color: #9e2441; cursor: pointer; font: inherit; font-weight: 700; }
+.couponMessage { max-width: 450px; margin: 10px 0 0; color: #5a385c !important; font-size: 14px; }
+@media (max-width: 1000px) {
+  .cartitems-format-main {
+    gap: 25px;
+  }
+}
+@media (max-width: 700px) {
+  .cartitems { margin: 46px auto; }
+  .cartitems > .cartitems-format-main { display: none; }
+  .cartitems-format-main.cartitems-format { display: grid; grid-template-columns: 84px 1fr auto; gap: 8px 15px; padding: 20px 0; font-size: 0.9rem; }
+  .productLink { grid-row: 1 / span 4; }
+  .cartitems-format > p { display: flex; justify-content: space-between; grid-column: 2 / -1; margin: 0; color: #505751; }
+  .cartitems-format > p::before, .cartitems-quantity::before { content: attr(data-label); color: var(--muted); font-weight: 500; }
+  .cartitems-format .title { display: block; grid-column: 2; color: var(--ink); font-weight: 600; }
+  .cartitems-format .title::before { display: none; }
+  .carticon-product-icon {
+    grid-row: 1 / span 4;
+    width: 84px;
+    height: 108px;
+    object-fit: cover;
+  }
+  .cartitems-remove-icon { grid-column: 3; grid-row: 1; justify-self: end; }
+  .cartitems-quantity { grid-column: 2 / -1; display: flex; justify-content: space-between; width: 100%; height: auto; border: 0; }
+  .cartitems-down {
+    grid-template-columns: 1fr;
+    gap: 50px;
+    margin: 60px 0;
+  }
+  .cartitems-total { gap: 25px; }
+  .cartitems-couponbox {
+    width: 100%;
+  }
+  .cartitems-couponbox input {
+    width: 100%;
+  }
+}

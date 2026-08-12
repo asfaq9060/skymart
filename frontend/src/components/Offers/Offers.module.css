@@ -1,0 +1,120 @@
+.offers {
+  width: 70%;
+  height: 65vh;
+  display: flex;
+  margin: auto;
+  padding: 0px 140px;
+  margin-bottom: 150px;
+  background: linear-gradient(180deg, #fde1ff 0%, #e1ffea22 60%);
+}
+.offers-left {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.offers-left h1 {
+  color: #171717;
+  font-size: 72px;
+  font-weight: 600;
+}
+.offers-left p {
+  color: #171717;
+  font-size: 21px;
+  font-weight: 600;
+}
+.offers-left button {
+  width: 268px;
+  height: 65px;
+  border-radius: 35px;
+  background: #ff4141;
+  border: none;
+  color: white;
+  font-size: 22px;
+  font-weight: 500;
+  margin-top: 30px;
+  cursor: pointer;
+}
+.offers-right {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-top: 50px;
+}
+@media (max-width: 1280px) {
+  .offers {
+    padding: 0px 100px;
+    height: 60vh;
+  }
+  .offers-left h1 {
+    font-size: 58px;
+  }
+  .offers-left p {
+    font-size: 20px;
+  }
+}
+@media (max-width: 1080px) {
+  .offers {
+    margin-top: 60px;
+    width: 80%;
+    padding: 0px 80px;
+  }
+  .offers-left h1 {
+    font-size: 50px;
+  }
+  .offers-right img {
+    width: 90%;
+  }
+}
+@media (max-width: 800px) {
+  .offers {
+    flex-direction: column;
+    height: auto;
+    padding: 40px 40px;
+    text-align: center;
+  }
+  .offers-left button {
+    margin: 25px auto;
+  }
+  .offers-right {
+    justify-content: center;
+    padding-top: 20px;
+  }
+  .offers-right img {
+    width: 70%;
+  }
+}
+@media (max-width: 650px) {
+  .offers-left h1 {
+    font-size: 40px;
+    line-height: 48px;
+  }
+  .offers-left p {
+    font-size: 18px;
+  }
+  .offers-left button {
+    width: 220px;
+    height: 55px;
+    font-size: 18px;
+  }
+}
+@media (max-width: 500px) {
+  .offers {
+    padding: 30px 20px;
+  }
+  .offers-left h1 {
+    font-size: 34px;
+  }
+  .offers-left p {
+    font-size: 16px;
+  }
+  .offers-left button {
+    width: 200px;
+    height: 50px;
+    font-size: 16px;
+  }
+  .offers-right img {
+    width: 80%;
+  }
+}

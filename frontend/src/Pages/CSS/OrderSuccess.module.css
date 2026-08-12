@@ -1,0 +1,11 @@
+.success, .state { min-height: 60vh; display: grid; place-items: center; align-content: center; gap: 16px; padding: 80px 20px; text-align: center; }
+.success > p { max-width: 580px; margin: 0; color: #606060; line-height: 1.6; }
+.success h1, .state h1 { margin: 0; color: #252525; font-size: clamp(30px, 4vw, 48px); }
+.checkmark { display: grid; place-items: center; width: 68px; height: 68px; border-radius: 50%; background: #e1f7e8; color: #208340; font-size: 38px; font-weight: 700; }
+.eyebrow { color: #d6305b !important; letter-spacing: 0.14em; font-size: 12px; font-weight: 700; }
+.summary { display: grid; gap: 0; width: min(100%, 480px); margin: 18px 0; text-align: left; border: 1px solid #e5e5e5; border-radius: 10px; overflow: hidden; }
+.summary p { display: flex; justify-content: space-between; gap: 20px; margin: 0; padding: 15px 18px; border-bottom: 1px solid #ececec; }
+.summary p:last-child { border-bottom: 0; }
+.summary span { color: #666; }
+.button { padding: 14px 24px; border-radius: 4px; background: #ff5a5a; color: white; font-weight: 600; text-decoration: none; }
+.state a { color: #d6305b; font-weight: 600; }

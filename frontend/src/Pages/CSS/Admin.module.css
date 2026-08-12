@@ -1,0 +1,28 @@
+.admin, .access { width: min(1000px, calc(100% - 40px)); min-height: 60vh; margin: 65px auto; }
+.access { display: grid; place-items: center; align-content: center; gap: 14px; text-align: center; }
+.access a { color: #db305c; font-weight: 700; }
+.eyebrow { color: #db305c; font-size: 12px; font-weight: 750; letter-spacing: .14em; }
+.intro { color: #626262; }
+.form { display: grid; max-width: 620px; gap: 18px; margin-top: 30px; padding: 28px; border: 1px solid #e3e3e3; border-radius: 10px; }
+.form label { display: grid; gap: 8px; color: #303030; font-size: 14px; font-weight: 650; }
+.form input, .form select { min-height: 44px; padding: 0 12px; border: 1px solid #cfcfcf; border-radius: 5px; color: #242424; font: inherit; }
+.priceGrid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.form button { width: fit-content; min-height: 46px; padding: 0 20px; border: 0; border-radius: 5px; background: #ff3f6c; color: white; font: inherit; font-weight: 700; cursor: pointer; }
+.form button:disabled { cursor: wait; opacity: .7; }
+.error { margin: 0; color: #bd183e; }
+.message { margin: 0; color: #177245; }
+.catalogue { margin-top: 60px; }
+.productList { display: grid; gap: 12px; margin-top: 18px; }
+.product { display: grid; grid-template-columns: 70px minmax(160px, 1fr) 120px 120px auto; align-items: center; gap: 14px; padding: 14px; border: 1px solid #e3e3e3; border-radius: 8px; }
+.product img { width: 70px; height: 86px; border-radius: 5px; object-fit: cover; }
+.productInfo { display: grid; gap: 6px; }
+.productInfo span { color: #707070; font-size: 13px; text-transform: capitalize; }
+.product label { display: grid; gap: 6px; color: #515151; font-size: 12px; font-weight: 650; }
+.product input { width: 100%; min-height: 38px; padding: 0 8px; border: 1px solid #cfcfcf; border-radius: 5px; font: inherit; }
+.rowActions { display: flex; gap: 8px; }
+.rowActions button { min-height: 38px; padding: 0 12px; border: 0; border-radius: 5px; background: #1c3023; color: white; font: inherit; font-size: 13px; font-weight: 700; cursor: pointer; }
+.rowActions button:disabled { cursor: wait; opacity: .7; }
+.rowActions .deleteButton { background: #b52443; }
+.rowError { grid-column: 2 / -1; margin: 0; color: #bd183e; font-size: 13px; }
+@media (max-width: 760px) { .product { grid-template-columns: 70px 1fr; } .product img { grid-row: 1 / span 3; } .productInfo { grid-column: 2; } .product label { grid-column: 2; } .rowActions { grid-column: 2; } .rowError { grid-column: 2; } }
+@media (max-width: 500px) { .priceGrid { grid-template-columns: 1fr; } .form { padding: 20px; } }

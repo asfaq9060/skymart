@@ -1,0 +1,9 @@
+.state {
+  display: grid;
+  place-items: center;
+  min-height: 45vh;
+  padding: 40px var(--page-gutter);
+  color: var(--muted);
+  font-size: 1rem;
+  text-align: center;
+}

@@ -1,0 +1,13 @@
+.account, .guest { width: min(1000px, calc(100% - 40px)); min-height: 60vh; margin: 65px auto; }
+.guest { display: grid; place-items: center; align-content: center; gap: 14px; text-align: center; }
+.guest h1, .account h1, .account h2 { color: #252525; }
+.guest p, .empty { color: #606060; }
+.guest a, .empty a, .order a { color: #db305c; font-weight: 650; }
+.eyebrow { color: #db305c; font-size: 12px; font-weight: 750; letter-spacing: 0.14em; }
+.profile { display: flex; justify-content: space-between; gap: 20px; max-width: 580px; margin: 24px 0 54px; padding: 18px; border: 1px solid #e4e4e4; border-radius: 8px; }
+.profile span, .order span { display: block; color: #737373; font-size: 13px; }
+.orders { display: grid; gap: 14px; margin-top: 18px; }
+.order { display: grid; grid-template-columns: 1.35fr 1fr .7fr .8fr .8fr auto; align-items: center; gap: 16px; padding: 20px; border: 1px solid #e4e4e4; border-radius: 8px; }
+.status { color: #2a7e48; text-transform: capitalize; }
+.error { color: #bd183e; }
+@media (max-width: 760px) { .order { grid-template-columns: repeat(2, 1fr); } .profile { flex-direction: column; } }
