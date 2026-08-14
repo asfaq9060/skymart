@@ -1,0 +1,11 @@
+.actions { display: grid; gap: 8px; margin-top: 12px; }
+.priceFields { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.priceFields label { display: grid; gap: 4px; color: #515151; font-size: 0.72rem; font-weight: 700; }
+.priceFields input { width: 100%; min-height: 34px; padding: 0 7px; border: 1px solid #cfcfcf; border-radius: 4px; color: #242424; font: inherit; }
+.buttons { display: flex; flex-wrap: wrap; gap: 8px; }
+.buttons button { min-height: 34px; padding: 0 11px; border: 0; border-radius: 4px; background: #1c3023; color: #fff; font: inherit; font-size: 0.78rem; font-weight: 700; cursor: pointer; }
+.buttons button:disabled { cursor: wait; opacity: .7; }
+.buttons .cancelButton { background: #5f6368; }
+.buttons .deleteButton { background: #b52443; }
+.error { margin: 0; color: #bd183e; font-size: 0.76rem; line-height: 1.35; }
+@media (max-width: 500px) { .priceFields { grid-template-columns: 1fr; } }

@@ -71,7 +71,9 @@
 }
 
 .newsletter button:hover { background: #38543d; }
+.newsletter button:disabled, .newsletter input:disabled { cursor: wait; opacity: .75; }
 .message { min-height: 18px; margin: 13px 0 0; color: #c5dfc3; font-size: 12px; }
+.error { color: #ffc3c3; }
 
 @media (max-width: 640px) {
   .newsletter { width: calc(100% - 40px); min-height: 330px; margin-bottom: 72px; padding: 45px 20px; }

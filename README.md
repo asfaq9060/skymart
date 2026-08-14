@@ -45,6 +45,8 @@ VITE_API_URL=http://your-api-host:5000
 
 The API supports account registration, login, coupon validation, and authenticated order checkout. Set a long, private `JWT_SECRET` in `backend/.env` before deploying.
 
+New accounts must verify a six-digit email code before they can log in. For Gmail delivery, enable 2-Step Verification and create a Gmail App Password, then set `GMAIL_USER` and `GMAIL_APP_PASSWORD` in `backend/.env`.
+
 
 - `POST /api/auth/register`
 - `POST /api/auth/login`
@@ -52,6 +54,7 @@ The API supports account registration, login, coupon validation, and authenticat
 - `PATCH /api/products/:productId` (admin only; updates prices)
 - `DELETE /api/products/:productId` (admin only)
 - `POST /api/coupons/validate`
+- `POST /api/newsletter/subscribe`
 - `POST /api/orders/checkout` (requires `Authorization: Bearer <token>`)
 - `GET /api/orders/:orderId` (requires `Authorization: Bearer <token>`)
 

@@ -13,6 +13,10 @@ const userSchema = new mongoose.Schema(
       match: /^[A-Z0-9][A-Z0-9._%+-]{0,62}@[A-Z0-9](?:[A-Z0-9-]{0,61}[A-Z0-9])?(?:\.[A-Z0-9](?:[A-Z0-9-]{0,61}[A-Z0-9])?)+$/i,
     },
     passwordHash: { type: String, required: true, select: false },
+    // Existing accounts predate email verification and remain able to sign in.
+    emailVerified: { type: Boolean, default: true, required: true },
+    verificationCodeHash: { type: String, select: false },
+    verificationCodeExpiresAt: { type: Date },
     role: { type: String, enum: ["customer", "admin"], default: "customer", required: true },
   },
   { timestamps: true, versionKey: false },

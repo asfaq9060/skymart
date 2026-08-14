@@ -1,6 +1,7 @@
 import { useContext, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { ShopContext } from "../Context/ShopContext.js";
+import AdminProductActions from "../components/AdminProductActions/AdminProductActions.jsx";
 import NewsLetter from "../components/NewsLetter/NewsLetter";
 import heroImage from "../components/Assets/Frontend_Assets/hero_image.png";
 import styles from "./CSS/Shop.module.css";
@@ -72,6 +73,7 @@ function Shop() {
             <Link to={`/product/${product.id}`} className={styles.productImage}><img src={product.image} alt={product.name} /><span>Quick view</span></Link>
             <div className={styles.productDetails}><p className={styles.productCategory}>{product.category === "kid" ? "Kids" : product.category}</p><Link to={`/product/${product.id}`}>{product.name}</Link>
               <div className={styles.productMeta}><p><strong>₹{product.new_price}</strong> <s>₹{product.old_price}</s></p>{addedProductIds.includes(product.id) ? <Link to="/cart">Go to cart</Link> : <button type="button" onClick={() => handleAddToCart(product.id)}>Add to cart</button>}</div>
+              <AdminProductActions product={product} />
             </div>
           </article>)}
         </div>

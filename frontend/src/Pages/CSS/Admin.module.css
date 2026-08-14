@@ -13,16 +13,20 @@
 .message { margin: 0; color: #177245; }
 .catalogue { margin-top: 60px; }
 .productList { display: grid; gap: 12px; margin-top: 18px; }
-.product { display: grid; grid-template-columns: 70px minmax(160px, 1fr) 120px 120px auto; align-items: center; gap: 14px; padding: 14px; border: 1px solid #e3e3e3; border-radius: 8px; }
+.product { display: grid; grid-template-columns: 70px minmax(0, 1fr); align-items: start; gap: 14px; padding: 14px; border: 1px solid #e3e3e3; border-radius: 8px; }
 .product img { width: 70px; height: 86px; border-radius: 5px; object-fit: cover; }
+.productContent { display: grid; min-width: 0; gap: 14px; }
 .productInfo { display: grid; gap: 6px; }
 .productInfo span { color: #707070; font-size: 13px; text-transform: capitalize; }
+.productInfo p { margin: 0; color: #515151; font-size: 14px; }
+.productInfo s { margin-left: 6px; color: #858585; }
+.priceFields { display: grid; grid-template-columns: repeat(2, minmax(0, 180px)); gap: 12px; }
 .product label { display: grid; gap: 6px; color: #515151; font-size: 12px; font-weight: 650; }
 .product input { width: 100%; min-height: 38px; padding: 0 8px; border: 1px solid #cfcfcf; border-radius: 5px; font: inherit; }
-.rowActions { display: flex; gap: 8px; }
+.rowActions { display: flex; flex-wrap: wrap; gap: 8px; }
 .rowActions button { min-height: 38px; padding: 0 12px; border: 0; border-radius: 5px; background: #1c3023; color: white; font: inherit; font-size: 13px; font-weight: 700; cursor: pointer; }
 .rowActions button:disabled { cursor: wait; opacity: .7; }
+.rowActions .cancelButton { background: #5f6368; }
 .rowActions .deleteButton { background: #b52443; }
-.rowError { grid-column: 2 / -1; margin: 0; color: #bd183e; font-size: 13px; }
-@media (max-width: 760px) { .product { grid-template-columns: 70px 1fr; } .product img { grid-row: 1 / span 3; } .productInfo { grid-column: 2; } .product label { grid-column: 2; } .rowActions { grid-column: 2; } .rowError { grid-column: 2; } }
-@media (max-width: 500px) { .priceGrid { grid-template-columns: 1fr; } .form { padding: 20px; } }
+.rowError { grid-column: 2; margin: 0; color: #bd183e; font-size: 13px; }
+@media (max-width: 500px) { .priceGrid, .priceFields { grid-template-columns: 1fr; } .form { padding: 20px; } }

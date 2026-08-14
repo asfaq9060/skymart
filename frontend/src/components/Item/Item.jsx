@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import AdminProductActions from "../AdminProductActions/AdminProductActions";
 import styles from "./Item.module.css";
 
 
@@ -19,6 +20,7 @@ const Item = (props) => {
          &#8377;{props.old_price}
         </div>
       </div>
+      <AdminProductActions product={props} />
     </div>
   )
 }

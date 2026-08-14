@@ -4,6 +4,7 @@ import cors from "cors";
 import express from "express";
 import authRoutes from "./routes/auth.js";
 import couponRoutes from "./routes/coupons.js";
+import newsletterRoutes from "./routes/newsletter.js";
 import orderRoutes from "./routes/orders.js";
 import productRoutes from "./routes/products.js";
 
@@ -31,6 +32,7 @@ app.get("/api/health", (_request, response) => {
 app.use("/api/products", productRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/coupons", couponRoutes);
+app.use("/api/newsletter", newsletterRoutes);
 app.use("/api/orders", orderRoutes);
 
 app.use((_request, response) => {

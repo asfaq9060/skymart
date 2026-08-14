@@ -15,7 +15,9 @@ function createOrderNumber() {
 
 router.get("/", async (request, response, next) => {
   try {
-    const orders = await Order.find({ user: request.userId }).sort({ createdAt: -1 }).lean();
+    const orders = await Order.find({ user: request.userId })
+      .sort({ createdAt: -1 })
+      .lean();
     return response.json({ orders: orders.map(serialiseOrder) });
   } catch (error) {
     return next(error);
@@ -24,27 +26,44 @@ router.get("/", async (request, response, next) => {
 
 router.post("/checkout", async (request, response, next) => {
   try {
-    const submittedItems = Array.isArray(request.body.items) ? request.body.items : [];
+    const submittedItems = Array.isArray(request.body.items)
+      ? request.body.items
+      : [];
     if (submittedItems.length === 0 || submittedItems.length > 36) {
-      return response.status(400).json({ error: "Your bag is empty or invalid." });
+      return response
+        .status(400)
+        .json({ error: "Your bag is empty or invalid." });
     }
 
     const quantities = new Map();
     for (const item of submittedItems) {
       const productId = Number(item.productId);
       const quantity = Number(item.quantity);
-      if (!Number.isInteger(productId) || !Number.isInteger(quantity) || quantity < 1 || quantity > 10) {
-        return response.status(400).json({ error: "Each item quantity must be between 1 and 10." });
+      if (
+        !Number.isInteger(productId) ||
+        !Number.isInteger(quantity) ||
+        quantity < 1 ||
+        quantity > 10
+      ) {
+        return response
+          .status(400)
+          .json({ error: "Each item quantity must be between 1 and 10." });
       }
       quantities.set(productId, (quantities.get(productId) ?? 0) + quantity);
     }
     if ([...quantities.values()].some((quantity) => quantity > 10)) {
-      return response.status(400).json({ error: "A maximum of 10 units per product is allowed." });
+      return response
+        .status(400)
+        .json({ error: "A maximum of 10 units per product is allowed." });
     }
 
-    const products = await Product.find({ productId: { $in: [...quantities.keys()] } }).lean();
+    const products = await Product.find({
+      productId: { $in: [...quantities.keys()] },
+    }).lean();
     if (products.length !== quantities.size) {
-      return response.status(400).json({ error: "One or more products are no longer available." });
+      return response
+        .status(400)
+        .json({ error: "One or more products are no longer available." });
     }
 
     const items = products.map((product) => {
@@ -59,7 +78,10 @@ router.post("/checkout", async (request, response, next) => {
       };
     });
     const subtotal = items.reduce((total, item) => total + item.lineTotal, 0);
-    const { coupon, discount } = await calculateCoupon(request.body.couponCode, subtotal);
+    const { coupon, discount } = await calculateCoupon(
+      request.body.couponCode,
+      subtotal,
+    );
 
     const order = await Order.create({
       orderNumber: createOrderNumber(),
@@ -72,7 +94,8 @@ router.post("/checkout", async (request, response, next) => {
     });
     return response.status(201).json({ order: serialiseOrder(order) });
   } catch (error) {
-    if (error.message && error.name !== "MongooseError") return response.status(400).json({ error: error.message });
+    if (error.message && error.name !== "MongooseError")
+      return response.status(400).json({ error: error.message });
     return next(error);
   }
 });
@@ -82,7 +105,10 @@ router.get("/:orderId", async (request, response, next) => {
     if (!mongoose.isObjectIdOrHexString(request.params.orderId)) {
       return response.status(400).json({ error: "Invalid order id." });
     }
-    const order = await Order.findOne({ _id: request.params.orderId, user: request.userId }).lean();
+    const order = await Order.findOne({
+      _id: request.params.orderId,
+      user: request.userId,
+    }).lean();
     if (!order) return response.status(404).json({ error: "Order not found." });
     return response.json({ order: serialiseOrder(order) });
   } catch (error) {

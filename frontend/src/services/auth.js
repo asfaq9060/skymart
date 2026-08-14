@@ -8,6 +8,10 @@ export function loginAccount(credentials) {
   return apiRequest("/api/auth/login", { method: "POST", body: JSON.stringify(credentials) });
 }
 
+export function verifyEmail(credentials) {
+  return apiRequest("/api/auth/verify-email", { method: "POST", body: JSON.stringify(credentials) });
+}
+
 export function fetchCurrentUser(token) {
   return apiRequest("/api/auth/me", { token });
 }

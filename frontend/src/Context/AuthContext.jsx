@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 import { AuthContext } from "./AuthContext";
-import { loginAccount, registerAccount } from "../services/auth";
+import { loginAccount, registerAccount, verifyEmail as verifyAccountEmail } from "../services/auth";
 
 const AUTH_STORAGE_KEY = "sky-mart-auth";
 
@@ -25,7 +25,10 @@ function AuthContextProvider({ children }) {
     ...auth,
     isAuthenticated: Boolean(auth.token),
     register: async (credentials) => {
-      const result = await registerAccount(credentials);
+      return registerAccount(credentials);
+    },
+    verifyEmail: async (credentials) => {
+      const result = await verifyAccountEmail(credentials);
       saveAuth(result);
       return result.user;
     },
