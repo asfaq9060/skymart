@@ -50,4 +50,4 @@ temp/
 uploads/
 
 # Local MongoDB data
-data/
+/backend/data/
