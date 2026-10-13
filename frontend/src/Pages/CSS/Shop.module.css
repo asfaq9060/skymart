@@ -16,15 +16,19 @@
 }
 
 .hero {
-  /* 72px navbar + 40px announcement bar = one viewport. */
+  width: 100%;
+  max-width: none;
   height: calc(100vh - 112px);
   height: calc(100svh - 112px);
   min-height: 0;
+
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(400px, 0.9fr);
-  max-width: 1440px;
-  margin: 0 auto;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 0.9fr);
+
+  margin: 0;
+  padding: 0;
   overflow: hidden;
+  box-sizing: border-box;
 }
 
 .heroContent {
