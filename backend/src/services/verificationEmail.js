@@ -1,76 +1,151 @@
-import nodemailer from "nodemailer";
+import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
+import { Router } from "express";
+import User from "../models/User.js";
+import { getJwtSecret } from "../middleware/requireAuth.js";
 
-export class VerificationEmailError extends Error {
-  constructor(message) {
-    super(message);
-    this.name = "VerificationEmailError";
-  }
+const router = Router();
+
+const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+function publicUser(user) {
+  return {
+    id: user._id.toString(),
+    name: user.name,
+    email: user.email,
+    role: user.role,
+  };
 }
 
-const user = process.env.GMAIL_USER;
-const pass = process.env.GMAIL_APP_PASSWORD;
+function createToken(user) {
+  return jwt.sign(
+    {
+      sub: user._id.toString(),
+      email: user.email,
+    },
+    getJwtSecret(),
+    { expiresIn: "7d" },
+  );
+}
 
-const transporter =
-  user && pass
-    ? nodemailer.createTransport({
-        service: "gmail",
-        auth: {
-          user,
-          pass,
-        },
-        connectionTimeout: 15000,
-        greetingTimeout: 10000,
-        socketTimeout: 20000,
-      })
-    : null;
-
-export async function sendVerificationCode(email, code) {
-  if (!transporter) {
-    console.error("[OTP] Gmail configuration is missing.");
-
-    throw new VerificationEmailError(
-      "Email verification is not configured on the server.",
-    );
-  }
-
+// REGISTER WITHOUT EMAIL OTP
+router.post("/register", async (request, response, next) => {
   try {
-    const info = await transporter.sendMail({
-      from: {
-        name: "Sky Mart",
-        address: user,
-      },
-      to: email,
-      subject: "Your Sky Mart verification code",
-      text: `Your Sky Mart verification code is ${code}. It expires in 15 minutes.`,
-      html: `
-        <div style="font-family: Arial, sans-serif;">
-          <h2>Verify your email</h2>
-          <p>Your Sky Mart verification code is:</p>
-          <p style="font-size:28px;font-weight:bold;letter-spacing:5px;">
-            ${code}
-          </p>
-          <p>This code expires in 15 minutes.</p>
-          <p>If you did not request this code, ignore this email.</p>
-        </div>
-      `,
+    const name = request.body.name?.trim();
+    const email = request.body.email?.trim().toLowerCase();
+    const password = request.body.password;
+
+    if (
+      !name ||
+      !emailPattern.test(email || "") ||
+      typeof password !== "string" ||
+      password.length < 8
+    ) {
+      return response.status(400).json({
+        error:
+          "Enter your name, a valid email, and a password of at least 8 characters.",
+      });
+    }
+
+    const existingUser = await User.findOne({ email });
+
+    if (existingUser) {
+      return response.status(409).json({
+        error: "An account already exists for this email. Please log in.",
+      });
+    }
+
+    const passwordHash = await bcrypt.hash(password, 12);
+
+    const user = await User.create({
+      name,
+      email,
+      passwordHash,
+      emailVerified: true,
     });
 
-    console.info("[OTP] Verification email accepted by SMTP.", {
-      messageId: info.messageId,
-      accepted: info.accepted?.length ?? 0,
-      rejected: info.rejected?.length ?? 0,
+    return response.status(201).json({
+      user: publicUser(user),
+      token: createToken(user),
+      message: "Account created successfully.",
     });
   } catch (error) {
-    // Keep detailed diagnostics in server logs only.
-    console.error("[OTP] Email delivery failed.", {
-      code: error.code,
-      command: error.command,
-      responseCode: error.responseCode,
-      response: error.response,
-    });
+    if (error.code === 11000) {
+      return response.status(409).json({
+        error: "An account already exists for this email. Please log in.",
+      });
+    }
 
-    throw new VerificationEmailError(
-      "We could not send the verification code. Please try again shortly.",
-    );
+    return next(error);
   }
-}
+});
+
+// LOGIN WITHOUT EMAIL OTP
+router.post("/login", async (request, response, next) => {
+  try {
+    const email = request.body.email?.trim().toLowerCase();
+    const password = request.body.password;
+
+    if (
+      !emailPattern.test(email || "") ||
+      typeof password !== "string" ||
+      password.length === 0
+    ) {
+      return response.status(400).json({
+        error: "Enter a valid email address and password.",
+      });
+    }
+
+    const user = await User.findOne({ email }).select("+passwordHash");
+
+    if (!user || !(await bcrypt.compare(password, user.passwordHash))) {
+      return response.status(401).json({
+        error: "Email or password is incorrect.",
+      });
+    }
+
+    return response.json({
+      user: publicUser(user),
+      token: createToken(user),
+    });
+  } catch (error) {
+    return next(error);
+  }
+});
+
+// GET CURRENT USER
+router.get("/me", async (request, response) => {
+  try {
+    const authorization = request.get("authorization") ?? "";
+
+    const token = authorization.startsWith("Bearer ")
+      ? authorization.slice(7)
+      : null;
+
+    if (!token) {
+      return response.status(401).json({
+        error: "Please log in to continue.",
+      });
+    }
+
+    const payload = jwt.verify(token, getJwtSecret());
+
+    const user = await User.findById(payload.sub);
+
+    if (!user) {
+      return response.status(401).json({
+        error: "Your account is no longer available.",
+      });
+    }
+
+    return response.json({
+      user: publicUser(user),
+    });
+  } catch {
+    return response.status(401).json({
+      error: "Your session has expired. Please log in again.",
+    });
+  }
+});
+
+export default router;
